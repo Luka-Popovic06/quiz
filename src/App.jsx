@@ -2,9 +2,41 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return <></>;
+  return (
+    <>
+      <h1 className="quiz-title">Quiz setup</h1>
+      <form className="setup-form">
+        <div className="form-section">
+          <label htmlFor="number-of-questions-input">Number of questions</label>
+          <input
+            type="number"
+            name="number-of-questions-input"
+            defaultValue={10}
+            min={1}
+            max={20}
+          />
+        </div>
+        <div className="form-section">
+          <label htmlFor="category">Category</label>
+          <select name="category" className="">
+            <option value="sports">sports</option>
+            <option value="art">art</option>
+            <option value="geography">geography</option>
+            <option value="mythology">mythology</option>
+          </select>
+        </div>
+        <div className="form-section">
+          <label htmlFor="difficulty">Difficulty</label>
+          <select name="difficulty">
+            <option value="easy">easy</option>
+            <option value="medium">medium</option>
+            <option value="hard">hard</option>
+          </select>
+        </div>
+        <button type="button">Start playing!</button>
+      </form>
+    </>
+  );
 }
 
 export default App;
