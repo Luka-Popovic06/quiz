@@ -1,40 +1,71 @@
 import { useState } from "react";
+import Question from "./Question";
 import "./App.css";
 
 function App() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const numberOfQuestion = 0;
+
   return (
     <>
-      <h1 className="quiz-title">Quiz setup</h1>
-      <form className="setup-form">
-        <div className="form-section">
-          <label htmlFor="number-of-questions-input">Number of questions</label>
-          <input
-            type="number"
-            name="number-of-questions-input"
-            defaultValue={10}
-            min={1}
-            max={20}
-          />
-        </div>
-        <div className="form-section">
-          <label htmlFor="category">Category</label>
-          <select name="category" className="">
-            <option value="sports">sports</option>
-            <option value="art">art</option>
-            <option value="geography">geography</option>
-            <option value="mythology">mythology</option>
-          </select>
-        </div>
-        <div className="form-section">
-          <label htmlFor="difficulty">Difficulty</label>
-          <select name="difficulty">
-            <option value="easy">easy</option>
-            <option value="medium">medium</option>
-            <option value="hard">hard</option>
-          </select>
-        </div>
-        <button type="button">Start playing!</button>
-      </form>
+      <main className="container">
+        {!isPlaying ? (
+          <>
+            <h1 className="quiz-title">Quiz setup</h1>
+            <form className="setup-form">
+              <div className="form-section">
+                <label htmlFor="number-of-questions-input">
+                  Number of questions
+                </label>
+                <input
+                  type="number"
+                  name="number-of-questions-input"
+                  defaultValue={10}
+                  min={1}
+                  max={20}
+                />
+              </div>
+              <div className="form-section">
+                <label htmlFor="category">Category</label>
+                <select name="category" className="">
+                  <option value="sports">sports</option>
+                  <option value="art">art</option>
+                  <option value="geography">geography</option>
+                  <option value="mythology">mythology</option>
+                </select>
+              </div>
+              <div className="form-section">
+                <label htmlFor="difficulty">Difficulty</label>
+                <select name="difficulty">
+                  <option value="easy">easy</option>
+                  <option value="medium">medium</option>
+                  <option value="hard">hard</option>
+                </select>
+              </div>
+              <button type="button" onClick={() => setIsPlaying(true)}>
+                Start playing!
+              </button>
+            </form>
+          </>
+        ) : (
+          <>
+            <Question />
+          </>
+        )}
+      </main>
+      {numberOfQuestion === 10 && (
+        <>
+          <div className="overlay"></div>
+          <div class="modal">
+            <h2 class="heading-secondary">Game Over!</h2>
+            <p class="modal-paragraph">
+              You answered <span>0 / 10</span> or <span>0% </span>questions
+              correctly
+            </p>
+            <button class="btn btn-play-again">Play again?</button>
+          </div>
+        </>
+      )}
     </>
   );
 }
