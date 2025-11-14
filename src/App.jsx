@@ -1,11 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Question from "./Question";
+import axios from "axios";
 import "./App.css";
 
 function App() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const numberOfQuestion = 0;
-
   return (
     <>
       <main className="container">
@@ -23,11 +21,20 @@ function App() {
                   defaultValue={10}
                   min={1}
                   max={20}
+                  onChange={(e) =>
+                    setTypeOfQuestions({
+                      ...typeOfQuestions,
+                      questionsNumber: e.target.value,
+                    })
+                  }
                 />
               </div>
               <div className="form-section">
                 <label htmlFor="category">Category</label>
-                <select name="category" className="">
+                <select
+                  name="category"
+                  onChange={(e) => selectCategory(e.target.value)}
+                >
                   <option value="sports">sports</option>
                   <option value="art">art</option>
                   <option value="geography">geography</option>
@@ -36,20 +43,38 @@ function App() {
               </div>
               <div className="form-section">
                 <label htmlFor="difficulty">Difficulty</label>
-                <select name="difficulty">
+                <select
+                  name="difficulty"
+                  onChange={(e) =>
+                    setTypeOfQuestions({
+                      ...typeOfQuestions,
+                      difficulty: e.target.value,
+                    })
+                  }
+                >
                   <option value="easy">easy</option>
                   <option value="medium">medium</option>
                   <option value="hard">hard</option>
                 </select>
               </div>
-              <button type="button" onClick={() => setIsPlaying(true)}>
+              <button
+                type="button"
+                onClick={() => {
+                  fetchQuestions(
+                    typeOfQuestions.questionsNumber,
+                    typeOfQuestions.category,
+                    typeOfQuestions.difficulty
+                  );
+                  setIsPlaying(true);
+                }}
+              >
                 Start playing!
               </button>
             </form>
           </>
         ) : (
           <>
-            <Question />
+            <Question {...questions[0]} />
           </>
         )}
       </main>
