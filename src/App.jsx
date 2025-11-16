@@ -23,6 +23,13 @@ function App() {
       .catch((error) => console.error(error));
   }, []);
 
+  const selectCategory = (category) => {
+    const selectedCategory = categories.find(
+      (c) => c.name.toLowerCase() === category
+    );
+    setTypeOfQuestions({ ...typeOfQuestions, category: selectedCategory.id });
+  };
+
   return (
     <>
       <main className="container">
