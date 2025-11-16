@@ -30,6 +30,30 @@ function App() {
     setTypeOfQuestions({ ...typeOfQuestions, category: selectedCategory.id });
   };
 
+  const fetchQuestions = (
+    selectedQuestionsNumber,
+    selectedCategory,
+    selectedDifficulty
+  ) => {
+    axios
+      .get(
+        `https://opentdb.com/api.php?amount=${selectedQuestionsNumber}&category=${selectedCategory}&difficulty=${selectedDifficulty}`
+      )
+      .then((result) => {
+        setQuestions(result.data.results);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  function getPercentage(correct, total) {
+    if (total === 0) return 0;
+    return (correct / total) * 100;
+  }
+  const percent = getPercentage(
+    score.correctCount,
+    typeOfQuestions.questionsNumber
+  );
   return (
     <>
       <main className="container">
