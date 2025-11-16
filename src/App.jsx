@@ -4,6 +4,19 @@ import axios from "axios";
 import "./App.css";
 
 function App() {
+  const [categories, setCategories] = useState([]);
+  const [questions, setQuestions] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [typeOfQuestions, setTypeOfQuestions] = useState({
+    questionsNumber: 10,
+    category: 21,
+    difficulty: "easy",
+  });
+  const [score, setScore] = useState({
+    correctCount: 0,
+    currentQuestionIndex: 1,
+  });
+
   return (
     <>
       <main className="container">
@@ -61,7 +74,7 @@ function App() {
                 type="button"
                 onClick={() => {
                   fetchQuestions(
-                    typeOfQuestions.questionsNumber,
+                    typeOfQuestions.questionsNumber + 1,
                     typeOfQuestions.category,
                     typeOfQuestions.difficulty
                   );
@@ -74,23 +87,56 @@ function App() {
           </>
         ) : (
           <>
-            <Question {...questions[0]} />
+            <Question
+              {...questions[score.currentQuestionIndex - 1]}
+              updateScore={(correctDelta, questionDelta) =>
+                setScore((prev) => {
+                  return {
+                    correctCount: prev.correctCount + correctDelta,
+                    currentQuestionIndex:
+                      prev.currentQuestionIndex + questionDelta,
+                  };
+                })
+              }
+            />
+            {questions[score.currentQuestionIndex] &&
+              score.currentQuestionIndex <=
+                Number(typeOfQuestions.questionsNumber) && (
+                <p className="correct-answers-p">
+                  Correct answers:{" "}
+                  <span className="correct-answers">{score.correctCount}</span>{" "}
+                  / {score.currentQuestionIndex}
+                </p>
+              )}
           </>
         )}
       </main>
-      {numberOfQuestion === 10 && (
-        <>
-          <div className="overlay"></div>
-          <div class="modal">
-            <h2 class="heading-secondary">Game Over!</h2>
-            <p class="modal-paragraph">
-              You answered <span>0 / 10</span> or <span>0% </span>questions
-              correctly
-            </p>
-            <button class="btn btn-play-again">Play again?</button>
-          </div>
-        </>
-      )}
+      {isPlaying &&
+        score.currentQuestionIndex >
+          Number(typeOfQuestions.questionsNumber) && (
+          <>
+            <div className="overlay"></div>
+            <div className="modal">
+              <h2 className="heading-secondary">Game Over!</h2>
+              <p className="modal-paragraph">
+                You answered {""}
+                <span>
+                  {score.correctCount} / {typeOfQuestions.questionsNumber}
+                </span>
+                or <span>{percent}% </span>questions correctly
+              </p>
+              <button
+                className="btn btn-play-again"
+                onClick={() => {
+                  setScore({ correctCount: 0, currentQuestionIndex: 1 });
+                  setIsPlaying(false);
+                }}
+              >
+                Play again?
+              </button>
+            </div>
+          </>
+        )}
     </>
   );
 }
