@@ -16,6 +16,12 @@ function App() {
     correctCount: 0,
     currentQuestionIndex: 1,
   });
+  useEffect(() => {
+    axios
+      .get("https://opentdb.com/api_category.php")
+      .then((result) => setCategories(result.data.trivia_categories))
+      .catch((error) => console.error(error));
+  }, []);
 
   return (
     <>
