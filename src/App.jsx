@@ -160,7 +160,7 @@ function App() {
                 <span>
                   {score.correctCount} / {typeOfQuestions.questionsNumber}
                 </span>
-                or <span>{percent.toFixed(2)}% </span>questions correctly
+                {""} or <span>{percent.toFixed(0)}% </span>questions correctly
               </p>
               <button
                 className="btn btn-play-again"
