@@ -167,6 +167,11 @@ function App() {
                 onClick={() => {
                   setScore({ correctCount: 0, currentQuestionIndex: 1 });
                   setIsPlaying(false);
+                  setTypeOfQuestions({
+                    questionsNumber: 10,
+                    category: 21,
+                    difficulty: "easy",
+                  });
                 }}
               >
                 Play again?

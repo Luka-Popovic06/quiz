@@ -4,8 +4,16 @@ const Question = (props) => {
   if (!incorrect_answers)
     return <p className="loading-answers-p">Loading...</p>;
 
-  const answers = [...incorrect_answers, correct_answer];
-  answers.sort(() => Math.random() - 0.5);
+  const shuffle = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+
+  const answers = shuffle([...incorrect_answers, correct_answer]);
+
   const findCorectAnser = (anser) => {
     if (anser === correct_answer) {
       updateScore(1, 1);
