@@ -6,6 +6,12 @@ import axios from "axios";
 import "./App.css";
 import Button from "./Button.jsx";
 
+/*const name = "sports";
+const cat = {
+  sports: 21,
+};
+cat[name];*/
+
 function App() {
   const [categories, setCategories] = useState([]);
   const [questions, setQuestions] = useState([]);
@@ -86,15 +92,17 @@ function App() {
               <div className="form-section">
                 <label htmlFor="category">Category</label>
                 <Select
+                  name={"category"}
                   options={categoryArray}
-                  setCategory={(e) => selectCategory(e.target.value)}
+                  handleChange={(e) => selectCategory(e.target.value)}
                 />
               </div>
               <div className="form-section">
                 <label htmlFor="difficulty">Difficulty</label>
                 <Select
+                  name={"difficulty"}
                   options={difficultyArray}
-                  setDifficulty={(e) =>
+                  handleChange={(e) =>
                     setTypeOfQuestions({
                       ...typeOfQuestions,
                       difficulty: e.target.value,
@@ -105,7 +113,8 @@ function App() {
               <Button
                 type={"button"}
                 variation="start"
-                startGame={() => {
+                elementClass={""}
+                clickAction={() => {
                   fetchQuestions(
                     typeOfQuestions.questionsNumber + 1,
                     typeOfQuestions.category,
@@ -113,7 +122,9 @@ function App() {
                   );
                   setIsPlaying(true);
                 }}
-              />
+              >
+                Start playing!
+              </Button>
             </form>
           </>
         ) : (
@@ -159,7 +170,8 @@ function App() {
               <Button
                 type={"button"}
                 variation={"finish"}
-                finishGame={() => {
+                elementClass={"btn btn-play-again"}
+                clickAction={() => {
                   setScore({ correctCount: 0, currentQuestionIndex: 1 });
                   setIsPlaying(false);
                   setTypeOfQuestions({
@@ -168,7 +180,9 @@ function App() {
                     difficulty: "easy",
                   });
                 }}
-              />
+              >
+                Play again?
+              </Button>
             </div>
           </>
         )}

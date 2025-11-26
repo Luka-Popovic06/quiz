@@ -43,8 +43,11 @@ const Question = (props) => {
       <Button
         type={"button"}
         variation={"next"}
-        nextQuestion={() => updateScore(0, 1)}
-      />
+        elementClass={"nex-question-btn"}
+        clickAction={() => updateScore(0, 1)}
+      >
+        Next question
+      </Button>
     </>
   );
 };

@@ -1,11 +1,10 @@
 const Select = (props) => {
-  const { options, setDifficulty, setCategory } = props;
-
+  const { options, handleChange, name } = props;
   return (
     <select
-      name={options[0].value === "easy" ? "difficulty" : "category"}
+      name={name}
       onChange={(e) => {
-        options[0].value === "easy" ? setDifficulty(e) : setCategory(e);
+        handleChange(e);
       }}
     >
       {options.map((option) => {
